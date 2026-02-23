@@ -1,0 +1,9 @@
+import express from "express"
+import { googleOAuthLogin } from "../controllers/auth.controller.js";
+const authRouter = express.Router();
+
+//routes
+authRouter.post('/login', googleOAuthLogin);
+
+export default authRouter;
+

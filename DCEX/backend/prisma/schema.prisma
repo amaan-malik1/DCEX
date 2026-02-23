@@ -20,10 +20,9 @@ model User {
 
 model InrWallet {
   id         String @id @default(uuid())
-  publicKey  String
-  privateKey String
   userId     String @unique
   user       User   @relation(fields: [userId], references: [id])
+  balance    Int
 }
 
 model SolWallet {
