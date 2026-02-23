@@ -1,11 +1,9 @@
 import "./App.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -13,16 +11,17 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <Home/>
+        <Home />
         <Footer />
       </>
     ),
   },
   {
-    path: "/",
+    path: "/dashboard",
     element: (
       <>
         <Navbar />
+        <Dashboard />
         <Footer />
       </>
     ),

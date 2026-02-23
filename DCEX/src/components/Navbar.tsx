@@ -10,17 +10,16 @@ const Navbar = () => {
 
   const handleLogout = () => {};
   return (
-    <div className="flex justify-between items-center w-[70%] mx-auto h-10 px-4 py-2 border-b-2">
-      <div className="text-2xl">DCEX</div>
-      {!user ? (
-        <div>
+    <div className="fixed top-0 left-0 w-full z-50">
+      <div className="flex justify-between items-center w-[70%] mx-auto h-14 px-4 py-2 my-5 border-2 border-black rounded-full bg-white/70 backdrop-blur-xl shadow-md">
+        <div className="text-2xl font-semibold">DCEX</div>
+
+        {!user ? (
           <PrimaryButton onClick={loginWithGoogle}>Login</PrimaryButton>
-        </div>
-      ) : (
-        <div>
+        ) : (
           <PrimaryButton onClick={handleLogout}>Logout</PrimaryButton>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
