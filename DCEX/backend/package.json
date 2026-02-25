@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.1",
+    "@solana/web3.js": "^1.98.4",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.6",
     "@types/nodemon": "^1.19.6",
