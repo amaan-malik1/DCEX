@@ -8,16 +8,19 @@ datasource db {
 }
 
 model User {
-  id          String     @id @default(uuid())
-  username    String
-  name        String?
-  profileImg  String?
-  password    String?
-  solWalletId String?
-  solWallets  SolWallet?
-  inrWalletId String?
-  inrWallet   InrWallet?
-  provider    Provider
+  id           String     @id @default(uuid())
+  username     String     @unique
+  name         String?
+  profileImg   String?
+  password     String?
+  solWalletId  String?
+  solWallets   SolWallet?
+  inrWalletId  String?
+  inrWallet    InrWallet?
+  provider     Provider
+  googleId     String     @unique
+  refreshToken String?
+  createdAt    DateTime   @default(now())
 }
 
 model InrWallet {
