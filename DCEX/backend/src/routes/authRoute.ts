@@ -3,6 +3,7 @@ import {
   getRefreshToken,
   googleLoginClient,
   googleOAuthLogin,
+  logoutUser,
 } from "../controllers/auth.controller.js";
 import { protectRoute } from "../middleware/authProtect.js";
 import { prismaClient } from "../lib/prisma.js";
@@ -18,7 +19,6 @@ authRouter.get("/me", protectRoute, async (req: Request, res: Response) => {
   const user = await prismaClient.user.findUnique({
     where: { id: req.userId },
   });
-
   res.json({ user });
 });
 
@@ -26,10 +26,6 @@ authRouter.get("/me", protectRoute, async (req: Request, res: Response) => {
 authRouter.post("/refresh", getRefreshToken);
 
 // 🔹 Logout
-authRouter.post("/logout", (req: Request, res: Response) => {
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
-  res.json({ message: "Logged out" });
-});
+authRouter.post("/logout", logoutUser);
 
 export default authRouter;

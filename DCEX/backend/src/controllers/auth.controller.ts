@@ -51,7 +51,7 @@ export const googleOAuthLogin = async (req: Request, res: Response) => {
     //finding user and if not present then data to DB
     let user = await prismaClient.user.findUnique({
       where: {
-        username: email,
+        googleId: sub,
       },
     });
 
@@ -59,7 +59,7 @@ export const googleOAuthLogin = async (req: Request, res: Response) => {
       //generating keypair for the user
       const keypair = Keypair.generate();
       const pubKey = keypair.publicKey.toBase58();
-      const secretKey = keypair.secretKey.toBase64();
+      // const secretKey = ;
 
       user = await prismaClient.user.create({
         data: {
@@ -71,7 +71,7 @@ export const googleOAuthLogin = async (req: Request, res: Response) => {
           solWallets: {
             create: {
               publicKey: pubKey,
-              privateKey: secretKey,
+              privateKey: keypair.secretKey.toString(),
             },
           },
           inrWallet: {
@@ -100,7 +100,7 @@ export const googleOAuthLogin = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
+      maxAge: 3 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -172,6 +172,22 @@ export const getRefreshToken = async (req: Request, res: Response) => {
     console.log("Error while refreshing token: ", error);
     res.json({
       message: "Internal server error",
+    });
+  }
+};
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("jwt");
+    res.json({
+      success: true,
+      message: "Logout succesfully",
+    });
+  } catch (error) {
+    console.log("Error while logout: ", error);
+    res.status(401).json({
+      success: false,
+      message: "Internal server error in logout",
     });
   }
 };

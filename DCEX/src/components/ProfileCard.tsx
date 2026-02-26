@@ -1,9 +1,20 @@
 import { WalletMinimal } from "lucide-react";
+import useAuthUser from "../context/AuthContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
-const getBalance = async () => {
-  const userWallet = await axios.get("/");
-};
+const getBalance = async () => {};
 const ProfileCard = () => {
+  const { authUser, isLoading } = useAuthUser();
+  const navigate = useNavigate();
+
+  if (!authUser) {
+    toast.error("Please login first");
+    navigate("/login");
+    return null;
+  }
+
   return (
     <div>
       <div>

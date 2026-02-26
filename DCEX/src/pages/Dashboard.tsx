@@ -1,20 +1,22 @@
-import { useState } from "react";
-import { WalletMinimal } from "lucide-react";
 import { PrimaryButton } from "../components/Button";
 import ProfileCard from "../components/ProfileCard";
+import useAuthUser from "../context/AuthContext";
 
 const Dashboard = () => {
-  const [userName, setUserName] = useState("User");
+  const { authUser, isLoading } = useAuthUser();
+
   const handleSend = () => {};
   const handleAddFunds = () => {};
   const handleWithdraw = () => {};
   const handleSwap = () => {};
 
+  console.log(authUser?.name);
+
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <div className="flex flex-col gap-4 bg-gray-100 w-[90vw] rounded-md px-8 py-6">
         {/* greating div */}
-        <Greeting img={"img"} name={userName} />
+        <Greeting img={authUser?.profileImg} name={authUser?.name} />
 
         {/* user profile */}
         <ProfileCard />

@@ -1,18 +1,23 @@
-// import useAuth from "../AuthContext/auth";
-import axios from "axios";
 import { PrimaryButton } from "./Button";
+import useAuthUser from "../context/AuthContext";
+import axios from "axios";
 
+// const BASE_URL = import.meta.env.CLIENT_BASE_URL;
 const Navbar = () => {
-  const user = false;
+  const { authUser, isLoading } = useAuthUser();
 
   const loginWithGoogle = () => {
-    window.location.href = "http://localhost:3000/api/auth/google";
+    window.location.href = `http://localhost:3000/api/auth/google`;
   };
 
   const handleLogout = async () => {
-    await axios.post("http://localhost:3000/api/auth/logout", {
-      credentials: "include",
-    });
+    await axios.post(
+      "http://localhost:3000/api/auth/logout",
+      {},
+      {
+        withCredentials: true,
+      },
+    );
     window.location.reload();
   };
 
@@ -21,7 +26,7 @@ const Navbar = () => {
       <div className="flex justify-between items-center w-[70%] mx-auto h-14 px-4 py-2 my-5 border-2 border-black rounded-full bg-white/70 backdrop-blur-xl shadow-md">
         <div className="text-2xl font-semibold">DCEX</div>
 
-        {!user ? (
+        {!authUser ? (
           <PrimaryButton onClick={loginWithGoogle}>Login</PrimaryButton>
         ) : (
           <PrimaryButton onClick={handleLogout}>Logout</PrimaryButton>
