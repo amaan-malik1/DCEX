@@ -28,4 +28,7 @@ authRouter.post("/refresh", getRefreshToken);
 // 🔹 Logout
 authRouter.post("/logout", logoutUser);
 
+/// other apis
+
+
 export default authRouter;
