@@ -29,4 +29,5 @@ const useAuthUser = () => {
   return { authUser, isLoading };
 };
 
+
 export default useAuthUser;

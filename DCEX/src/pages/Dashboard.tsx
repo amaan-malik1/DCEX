@@ -1,17 +1,21 @@
 import { PrimaryButton } from "../components/Button";
+import Loader from "../components/Loader";
 import ProfileCard from "../components/ProfileCard";
 import useAuthUser from "../context/AuthContext";
 
 const Dashboard = () => {
   const { authUser, isLoading } = useAuthUser();
+  // const navigate = useNavigate();
 
-  const handleSend = () => {};
-  const handleAddFunds = () => {};
-  const handleWithdraw = () => {};
-  const handleSwap = () => {};
+  const handleSend = () => { };
+  const handleAddFunds = () => { };
+  const handleWithdraw = () => { };
+  const handleSwap = () => { };
 
-  console.log(authUser?.name);
-
+  if (isLoading) {
+    return <Loader />
+  }
+  
   return (
     <div className="flex justify-center items-center flex-col h-screen">
       <div className="flex flex-col gap-4 bg-gray-100 w-[90vw] rounded-md px-8 py-6">
