@@ -1,5 +1,5 @@
 import { PrimaryButton } from "./Button";
-import useAuthUser from "../context/AuthContext";
+import useAuthUser from "../hooks/useAuthUser";
 import axios from "axios";
 
 // const BASE_URL = import.meta.env.CLIENT_BASE_URL;

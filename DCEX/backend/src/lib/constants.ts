@@ -39,19 +39,29 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [
 export const connection = new Connection("https://api/mainnet-beta.solana.com");
 
 export const getSupportedTokens = async () => {
-  if (
-    !LAST_UPDATED ||
-    new Date().getTime() - LAST_UPDATED < TOKEN_REFRESH_INTERVAL
-  ) {
-    const response = await axios.get(
-      "https://lite-api.jup.ag/price/v3?ids=So11111111111111111111111111111111111111112,EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-    );
-    prices = response.data.data;
-    LAST_UPDATED = new Date().getTime();
-  }
+  try {
+    if (
+      !LAST_UPDATED ||
+      new Date().getTime() - LAST_UPDATED < TOKEN_REFRESH_INTERVAL
+    ) {
+      const response = await axios.get(
+        `https://lite-api.jup.ag/price/v3?ids=So11111111111111111111111111111111111111112,Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB,EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`,
+      );
 
-  return SUPPORTED_TOKENS.map((s) => ({
-    ...s,
-    price: prices[s.name]?.price,
-  }));
+      prices = response.data.data;
+      LAST_UPDATED = new Date().getTime();
+    }
+
+    return SUPPORTED_TOKENS.map((token) => ({
+      ...token,
+      price: prices[token.mint]?.price ?? 0,
+    }));
+  } catch (error) {
+    console.error("Error fetching token prices:", error);
+
+    return SUPPORTED_TOKENS.map((token) => ({
+      ...token,
+      price: 0,
+    }));
+  }
 };

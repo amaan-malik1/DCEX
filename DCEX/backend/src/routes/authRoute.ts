@@ -10,25 +10,50 @@ import { prismaClient } from "../lib/prisma.js";
 
 const authRouter = express.Router();
 
-// 🔹 OAuth
+// OAuth
 authRouter.get("/google", googleLoginClient);
 authRouter.get("/google/callback", googleOAuthLogin);
 
-// 🔹 Current User
+// Current User
 authRouter.get("/me", protectRoute, async (req: Request, res: Response) => {
-  const user = await prismaClient.user.findUnique({
-    where: { id: req.userId },
-  });
-  res.json({ user });
+  try {
+    const user = await prismaClient.user.findUnique({
+      where: { id: req.userId },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        profileImg: true,
+        solWallets: {
+          select: {
+            publicKey: true,
+          },
+        },
+        inrWallet: {
+          select: {
+            balance: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      user,
+    });
+  } catch (error) {
+    console.error("Error while fetching user: ", error);
+    res.status(500).json({ message: "Failed to fetch user" });
+  }
 });
 
-// 🔹 Refresh
+// Refresh
 authRouter.post("/refresh", getRefreshToken);
 
-// 🔹 Logout
+// Logout
 authRouter.post("/logout", logoutUser);
-
-/// other apis
-
 
 export default authRouter;
