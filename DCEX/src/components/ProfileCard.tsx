@@ -1,13 +1,18 @@
 import { WalletMinimal } from "lucide-react";
 import useAuthUser from "../hooks/useAuthUser";
-import { useEffect, useState } from "react";
-import { PrimaryButton } from "./Button";
 import Loader from "./Loader";
 import useGetUserTokens from "../hooks/useGetTokens";
+import { useState } from "react";
+import { TabButton } from "./Button";
 
 const ProfileCard = () => {
   const { authUser, isLoading } = useAuthUser();
   const { assets } = useGetUserTokens();
+
+  type Tab = "swap" | "add_funds" | "send" | "tokens" | "withdraw";
+  const tabs: Tab[] = ["swap", "add_funds", "withdraw", "send", "tokens"];
+  const [selectedTab, setSelectedTab] = useState<Tab>("tokens")
+
 
   if (isLoading) {
     return <Loader />
@@ -33,8 +38,17 @@ const ProfileCard = () => {
       </div>
 
 
+      {/* TABS */}
+      {
+        tabs.map(tab => <TabButton active={tab === selectedTab} onClick={() => {
+          setSelectedTab(tab)
+        }}>
+          {tab}
+        </TabButton>)
+      }
+
       {/* Assets */}
-      {assets && (
+      {selectedTab === "tokens" && assets && (
         <div className="mt-6 space-y-2 bg-slate-900/15  rounded-md my-2 p-2">
           {assets?.tokens.map((token) => (
             <div

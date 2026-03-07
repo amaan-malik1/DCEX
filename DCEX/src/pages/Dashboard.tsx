@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { PrimaryButton } from "../components/Button";
 import Loader from "../components/Loader";
 import ProfileCard from "../components/ProfileCard";
 import useAuthUser from "../hooks/useAuthUser";
+import { PrimaryButton } from "../components/Button";
 
 const Dashboard = () => {
+  const [copied, setCopied] = useState(false);
   const { authUser, isLoading } = useAuthUser();
   const handleSend = () => { };
   const handleAddFunds = () => { };
   const handleWithdraw = () => { };
   const handleSwap = () => { };
 
-  const [copied, setCopied] = useState(false);
+
 
   useEffect(() => {
     if (copied) {
@@ -33,6 +34,7 @@ const Dashboard = () => {
         {/* greating div */}
         <Greeting img={authUser?.profileImg} name={authUser?.name} />
 
+
         {/* user profile */}
         <ProfileCard />
 
@@ -50,13 +52,6 @@ const Dashboard = () => {
             >
               {copied ? "Copied" : "Your wallet"}
             </PrimaryButton>
-          </div>
-          {/* buttons send, add fund... div */}
-          <div className="flex justify-center gap-3">
-            <PrimaryButton children={"Send"} onClick={handleSend} />
-            <PrimaryButton children={"Add Funds"} onClick={handleAddFunds} />
-            <PrimaryButton children={"Withdraw"} onClick={handleWithdraw} />
-            <PrimaryButton children={"Swap"} onClick={handleSwap} />
           </div>
         </div>
 
