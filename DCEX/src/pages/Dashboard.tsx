@@ -7,12 +7,6 @@ import { PrimaryButton } from "../components/Button";
 const Dashboard = () => {
   const [copied, setCopied] = useState(false);
   const { authUser, isLoading } = useAuthUser();
-  const handleSend = () => { };
-  const handleAddFunds = () => { };
-  const handleWithdraw = () => { };
-  const handleSwap = () => { };
-
-
 
   useEffect(() => {
     if (copied) {
@@ -29,7 +23,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen">
+    <div className="flex justify-center items-center gap-3 flex-col h-screen">
       <div className="flex flex-col gap-4 bg-gray-100 w-[90vw] rounded-md px-8 py-6">
         {/* greating div */}
         <Greeting img={authUser?.profileImg} name={authUser?.name} />

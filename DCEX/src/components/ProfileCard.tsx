@@ -1,16 +1,21 @@
 import { WalletMinimal } from "lucide-react";
 import useAuthUser from "../hooks/useAuthUser";
 import Loader from "./Loader";
-import useGetUserTokens from "../hooks/useGetTokens";
 import { useState } from "react";
 import { TabButton } from "./Button";
+import ShowTokens from "./ShowTokens";
+import Swap from "./Swap";
 
 const ProfileCard = () => {
   const { authUser, isLoading } = useAuthUser();
-  const { assets } = useGetUserTokens();
-
   type Tab = "swap" | "add_funds" | "send" | "tokens" | "withdraw";
-  const tabs: Tab[] = ["swap", "add_funds", "withdraw", "send", "tokens"];
+  const tabs: { id: Tab, name: string }[] = [
+    { id: "swap", name: "Swap" },
+    { id: "tokens", name: "Tokens" },
+    { id: "add_funds", name: "Add funds" },
+    { id: "send", name: "Send" },
+    { id: "withdraw", name: "Withdraw" },
+  ];
   const [selectedTab, setSelectedTab] = useState<Tab>("tokens")
 
 
@@ -19,7 +24,7 @@ const ProfileCard = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <p className="flex items-center gap-2 font-semibold text-gray-600 text-sm">
         <WalletMinimal size={18} fill="gray" />
         TipLink Account Assets
@@ -39,28 +44,24 @@ const ProfileCard = () => {
 
 
       {/* TABS */}
-      {
-        tabs.map(tab => <TabButton active={tab === selectedTab} onClick={() => {
-          setSelectedTab(tab)
-        }}>
-          {tab}
-        </TabButton>)
-      }
+      <div>
+        {
+          tabs.map(tab => <TabButton active={tab.id === selectedTab} onClick={() => {
+            setSelectedTab(tab.id)
+          }}>
+            {tab.name}
+          </TabButton>)
+        }
+      </div>
 
-      {/* Assets */}
-      {selectedTab === "tokens" && assets && (
-        <div className="mt-6 space-y-2 bg-slate-900/15  rounded-md my-2 p-2">
-          {assets?.tokens.map((token) => (
-            <div
-              key={token.mint}
-              className="flex justify-between border-b py-1  hover:bg-slate-400/15"
-            >
-              <span>{token.token}</span>
-              <span>{token.balance}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* TABS showing based on tab */}
+      <div className=" transition-all duration-200 ease-in-out">
+        {/* show token  */}
+        {selectedTab === "tokens" && <ShowTokens />}
+
+        {/* show swap */}
+        {selectedTab === "swap" && <Swap />}
+      </div>
     </div>
   );
 };
