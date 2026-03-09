@@ -5,9 +5,11 @@ import { useState } from "react";
 import { TabButton } from "./Button";
 import ShowTokens from "./ShowTokens";
 import Swap from "./Swap";
+import useGetUserTokens from "../hooks/useGetTokens";
 
 const ProfileCard = () => {
   const { authUser, isLoading } = useAuthUser();
+  const { assets } = useGetUserTokens()
   type Tab = "swap" | "add_funds" | "send" | "tokens" | "withdraw";
   const tabs: { id: Tab, name: string }[] = [
     { id: "swap", name: "Swap" },
