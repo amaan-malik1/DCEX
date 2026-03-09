@@ -1,7 +1,7 @@
-import useGetUserTokens from "../hooks/useGetTokens";
+import { useAssets } from "../hooks/useAssets";
 
 const ShowTokens = () => {
-    const { assets } = useGetUserTokens();
+    const { assets } = useAssets();
 
     return (
         <div className="mt-6 space-y-2 bg-slate-900/15  rounded-md my-2 p-2 ease-in-out  transition-all duration-200">

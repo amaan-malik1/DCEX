@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useGetUserTokens from "../hooks/useGetTokens"
 import AssetsSelector from "./AssetsSelector";
 
 const SwapInput = ({ amount, baseToken, changeToken }: {

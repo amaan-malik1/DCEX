@@ -1,4 +1,5 @@
 import "./App.css";
+import { AssetsProvider } from "./context/AssetsProvider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -36,9 +37,12 @@ const router = createBrowserRouter([
     ),
   },
 ]);
-
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AssetsProvider>
+      <RouterProvider router={router} />
+    </AssetsProvider>
+  );
 }
 
 export default App;

@@ -5,11 +5,11 @@ import { useState } from "react";
 import { TabButton } from "./Button";
 import ShowTokens from "./ShowTokens";
 import Swap from "./Swap";
-import useGetUserTokens from "../hooks/useGetTokens";
+import { useAssets } from "../hooks/useAssets";
 
 const ProfileCard = () => {
   const { authUser, isLoading } = useAuthUser();
-  const { assets } = useGetUserTokens()
+  const { assets } = useAssets()
   type Tab = "swap" | "add_funds" | "send" | "tokens" | "withdraw";
   const tabs: { id: Tab, name: string }[] = [
     { id: "swap", name: "Swap" },
@@ -48,7 +48,7 @@ const ProfileCard = () => {
       {/* TABS */}
       <div>
         {
-          tabs.map(tab => <TabButton active={tab.id === selectedTab} onClick={() => {
+          tabs.map((tab) => <TabButton active={tab.id === selectedTab} onClick={() => {
             setSelectedTab(tab.id)
           }}>
             {tab.name}
